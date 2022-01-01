@@ -1,6 +1,6 @@
 # Nerd fonts patcher helper (font_patcher_helper)
 ![Banner](Banner.svg "Nerd fonts patcher helper (font_patcher_helper)")
-[![Latest version: Beta](https://img.shields.io/badge/version-Beta-ab4642.svg?longCache=true "Latest version: Beta")](https://github.com/lperezperez/font_patcher_helper/) [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip) [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-a1b56c.svg?longCache=true)](https://github.com/RichardLitt/standard-readme) [![Keep a Changelog 1.0.0](https://img.shields.io/badge/changelog-Keep%20a%20Changelog%201.0.0-7cafc2.svg?longCache=true)](http://keepachangelog.com/en/1.0.0/) [![License: MIT](https://img.shields.io/badge/License-MIT-ba8baf.svg)](https://opensource.org/licenses/MIT)
+[![Latest version: 1.0.0](https://img.shields.io/badge/version-1.0.0-3b79ac.svg?longCache=true "Latest version: Beta")](https://github.com/lperezperez/font_patcher_helper/) [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-a1b56c.svg?longCache=true)](https://github.com/RichardLitt/standard-readme) [![Keep a Changelog 1.0.0](https://img.shields.io/badge/changelog-Keep%20a%20Changelog%201.0.0-fccd43.svg?longCache=true)](http://keepachangelog.com/en/1.0.0/) [![License: MIT](https://img.shields.io/badge/License-MIT-ba8baf.svg)](https://opensource.org/licenses/MIT)
 > A [Nerd Fonts Patcher](https://github.com/ryanoasis/nerd-fonts#font-patcher) helper to patch custom fonts.
 
 Downloads the latest version of the [Nerd Fonts Patcher](https://github.com/ryanoasis/nerd-fonts#font-patcher) and patch specified fonts.
@@ -12,7 +12,6 @@ Downloads the latest version of the [Nerd Fonts Patcher](https://github.com/ryan
 - Update available packages:
 	```bash
 	sudo apt-get update
-	sudo apt install python3
 	```
 - Install Python v3:
 	```bash

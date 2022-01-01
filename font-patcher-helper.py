@@ -11,13 +11,14 @@ from urllib import request
 FONT_PATCHER = "font-patcher"
 repo_only_url = compile(r"https:\/\/github\.com\/[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}\/[a-zA-Z0-9]+$")
 re_branch = compile("/(tree|blob)/(.+?)/")
-def download(url, output_folder = "./"):
+def download(url, output_folder = "./", full_path = True):
 	"""
 	Downloads the files and directories under url to output_folder.
 
 	Parameters:
 		url (str): The URL of the subfolder to extract.
 		output_folder (str): The base path where the subfolder will be dowloaded.
+		full_path (bool): Download to full path.
 	"""
 	# Check if the URL is from a full GitHub repo. If it is, use 'git clone' to download it.
 	if match(repo_only_url, url):
@@ -33,7 +34,7 @@ def download(url, output_folder = "./"):
 		if isinstance(json, dict) and json["type"] == "file":
 			try:
 				# Download the file.
-				request.urlretrieve(json["download_url"], path.join(output_folder, json["path"]))
+				request.urlretrieve(json["download_url"], path.join(output_folder, json["path"] if full_path else path.basename(json["path"])))
 				return 1
 			except KeyboardInterrupt:
 				exit("Process cancelled by user.")
@@ -47,7 +48,7 @@ def download(url, output_folder = "./"):
 			if file["download_url"] is not None:
 				try:
 					# Download the file.
-					request.urlretrieve(file["download_url"], path.join(output_folder, file["path"]))
+					request.urlretrieve(file["download_url"], path.join(output_folder, file["path"] if full_path else path.basename(file["path"])))
 				except KeyboardInterrupt:
 					exit("Process cancelled by user.")
 			else:
@@ -63,19 +64,7 @@ def run_patcher(font_file, output_dir):
 		output_dir (str): The output directory where the patched font will be stored.
 	"""
 	makedirs(output_dir, exist_ok = True)
-	cmd = "./font-patcher -w -c {} -out {}".format(font_file, output_dir)
-	system("./font-patcher -w -c {} -out {}".format(font_file, output_dir))
-
-def run_processes(processes):
-	"""
-	Runs the processes
-
-	Arguments:
-		processes (list): A list of processes to run.
-	"""
-	for process in processes:
-		process.join()
-	processes = []
+	system("./font-patcher -w -c \"{}\" -out \"{}\"".format(font_file, output_dir))
 
 # Check arguments
 if len(sys.argv) == 0:
@@ -88,7 +77,10 @@ if not path.isdir(path.join("src", "glyphs")):
 	files = download("https://github.com/ryanoasis/nerd-fonts/tree/master/src/glyphs")
 	if files > 0:
 		print("{} glyphs fonts downloaded.".format(files))
-output_path = "./patched-fonts" # Set output path
+# Download Nerd fonts test (if needed)
+if not path.isfile("test-fonts.sh") and download("https://github.com/ryanoasis/nerd-fonts/tree/master/bin/scripts/test-fonts.sh", full_path = False) > 0:
+	print("test-fonts.sh script dowloaded.")
+output_path = "./patched-fonts"  # Set output path
 fonts = {}
 for font_path in sys.argv[1:]:
 	if path.isfile(font_path):
@@ -97,15 +89,18 @@ for font_path in sys.argv[1:]:
 		for root, folder_names, file_names in walk(font_path):
 			for file_name in file_names:
 				if path.splitext(file_name)[-1] in [".otf", ".ttf"]:
-					fonts[path.join(root, file_name)] = path.join(output_path, path.relpath(root, font_path), file_name)
+					fonts[path.join(root, file_name)] = path.join(output_path, path.basename(font_path))
 	else:
 		print("The path {} is invalid".format(font_path))
 processes = []
 process_count = cpu_count()
-for source, dest in islice(fonts.items(), cpu_count()):
+for source, dest in fonts.items():
 	if len(processes) == process_count:
-		run_processes(processes)
+		for process in processes:
+			process.join()
+		processes = []
 	processes.append(Process(target=run_patcher, args = (source, dest)))
 	processes[-1].start()
 if len(processes) > 0:
-	run_processes(processes)
+	for process in processes:
+		process.join()
