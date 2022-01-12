@@ -16,18 +16,18 @@ def get_font_files(paths: list):
 	Arguments:
 		paths (list): A list of paths whether to retrieve fonts.
 	"""
-	fonts_files = []
+	font_files = []
 	for font_path in paths: # For each path...
 		if path.isfile(font_path) and path.splitext(font_path)[-1] in FONT_EXTENSIONS: # If is a font file...
-			fonts_files.append(font_path) # Append font.
+			font_files.append(font_path)  # Append font.
 		elif path.isdir(font_path): # If is a folder...
 			for root, folder_names, file_names in walk(font_path): # For each descent...
 				for file_name in file_names: # for each file...
 					if path.splitext(file_name)[-1] in FONT_EXTENSIONS: # If is a font file...
-						fonts_files.append(path.join(root, file_name)) # Append font.
+						font_files.append(path.join(root, file_name))  # Append font.
 		else:
 			stderr.write(f"Cannot retrieve path {font_path}") # Show error.
-	return fonts_files # Return font file paths.
+	return font_files # Return font file paths.
 
 def remove_nerd_fonts_words(font_name: str, additional_words: list=[]):
 	"""
@@ -112,11 +112,12 @@ def rename_font(font_file: str, remove_words: list=[]):
 	if (font_full_name == font_family and font_subfamily):
 		font_full_name = f"{font_family} {font_subfamily}" # Rename ID 1
 	font_full_name_macos = font_full_name # Rename ID 18
+	font_sample_text = font_full_name  # Rename ID 19
 	font_postscript_name = font_full_name.translate("[](){}<>/%").replace(" ", "-") # Rename ID 6
 	font_version = sub(r"^Version\s+", "", font_version)
 	if (";Nerd Fonts " in font_version):
 		font_version = ";".join(match(r"^([0-9.]+).*?;(Nerd Fonts [0-9.]+)$", font_version).group(1, 2)) # Rename ID 5
-		font_subfamily_id = font_postscript_name + ";" + ";NF".join(match(r"^Version ([0-9.]+);Nerd Fonts ([0-9.]+)$", font_version).group(1, 2)) # Rename ID 3
+		font_subfamily_id = font_postscript_name + ";" + ";NF".join(match(r"^([0-9.]+);Nerd Fonts ([0-9.]+)$", font_version).group(1, 2)) # Rename ID 3
 	else:
 		font_subfamily_id = font_postscript_name + ";" + font_version
 	font_family_preferred = font_family # Rename ID 16
@@ -140,7 +141,7 @@ def rename_font(font_file: str, remove_words: list=[]):
 		elif record.nameID == 18:
 			record.string = font_full_name_macos
 		elif record.nameID == 19:
-			record.nameID = font_full_name
+			record.string = font_sample_text
 	# CFF table naming for CFF fonts (only)
 	if "CFF " in font:
 		try:
