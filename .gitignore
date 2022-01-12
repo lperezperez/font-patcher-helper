@@ -1,5 +1,7 @@
 .vscode/
+__pycache__/
 font-patcher
 patched-fonts/
+renamed-fonts/
 src/
 test-fonts.sh
