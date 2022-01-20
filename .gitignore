@@ -1,6 +1,8 @@
 .vscode/
 __pycache__/
 font-patcher
+ligatures/
+ligaturized-fonts/
 patched-fonts/
 renamed-fonts/
 src/
