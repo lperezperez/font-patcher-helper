@@ -329,7 +329,7 @@ def remove_wws_styles(font_name : str):
 	Arguments:
 		font_name (str): The font name from which the styles will be removed.
 	"""
-	return font_name.replace("Thin", "").replace("ExtraLight", "").replace("Regular", "").replace("Medium", "").replace("SemiBold", "").replace("ExtraBold", "").replace("Bold", "").replace("Black", "").replace("Italic", "").strip()
+	return font_name.replace("Thin", "").replace("ExtraLight", "").replace("Light", "").replace("Regular", "").replace("Medium", "").replace("SemiBold", "").replace("ExtraBold", "").replace("Bold", "").replace("Black", "").replace("Italic", "").strip()
 def remove_styles(font_name : str):
 	"""
 	Remove font styles from `font_name`
@@ -366,7 +366,7 @@ def rename_fontforge(font: fontforge.font):
 	Arguments:
 		font (fontforge.font): The font to rename.
 	"""
-	font.fullname = normalize_styles(font.fullname) # Normalize font style.
+	font.fullname = normalize_styles(font.fullname.replace(NERD_FONT_SUFFIX, "")) # Normalize font style.
 	font.familyname = remove_styles(font.fullname) # Remove styles from full name to get the font family name.
 	subfamilyname = font.fullname.replace(font.familyname, "").strip() # Set subfamily name based on full name.
 	font.fullname = f"{font.familyname} {subfamilyname}" # Rename the full name based on the font family name and sub family name.
