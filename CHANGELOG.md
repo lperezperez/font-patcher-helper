@@ -1,5 +1,11 @@
 # Changelog
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and tries to adhere (due to the nature of the project itself), to [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
+## 1.0.4 - 2023-03-02
+### Added
+- [install-dependencies.sh](https://github.com/lperezperez/font-patcher-helper/blob/master/install-dependencies.sh) script to automatically install all dependencies needed.
+### Changed
+- [font-patcher-helper.py](https://github.com/lperezperez/font-patcher-helper/blob/master/font-patcher-helper.py) script to allow the downloaded `font-patcher` script execution.
+- [Documentation files](https://github.com/lperezperez/font-patcher-helper/blob/master/README.md).
 ## 1.0.3 - 2022-01-22
 ### Added
 - [ligaturize-fonts.py](https://github.com/lperezperez/font-patcher-helper/blob/master/ligaturize-fonts.py) to add code ligatures to fonts based on the ligatures implemented in [Fira Code v3.1](https://github.com/tonsky/FiraCode/tree/e9943d2d631a4558613d7a77c58ed1d3cb790992/distr/otf) OpenType fonts.
