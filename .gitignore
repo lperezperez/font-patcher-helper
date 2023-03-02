@@ -1,6 +1,7 @@
 .vscode/
 __pycache__/
 font-patcher
+input-fonts/
 ligatures/
 ligaturized-fonts/
 patched-fonts/
