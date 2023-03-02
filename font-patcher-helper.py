@@ -23,6 +23,7 @@ if not path.isfile(FONT_PATCHER_SCRIPT):
 		with open(FONT_PATCHER_SCRIPT, "w") as file:
 			file.writelines(lines)
 		print(FONT_PATCHER_SCRIPT + " script dowloaded.")
+	chmod +x FONT_PATCHER_SCRIPT
 # Download font glyphs (if needed).
 if not path.isdir(path.join("src", "glyphs")):
 	github.download("https://github.com/ryanoasis/nerd-fonts/tree/master/src/glyphs")
@@ -31,5 +32,6 @@ if not path.isdir(path.join("src", "glyphs")):
 if not path.isfile(TEST_FONTS_SCRIPT):
 	github.download("https://github.com/ryanoasis/nerd-fonts/tree/master/bin/scripts/" + TEST_FONTS_SCRIPT, full_path = False)
 	print(f"{TEST_FONTS_SCRIPT} script dowloaded.")
+	chmod +x TEST_FONTS_SCRIPT
 fonts.run_in_parallel(fonts.get_font_files(argv[1:]), fonts.run_patcher) # Patch fonts.
 fonts.run_in_parallel(fonts.get_font_files([fonts.PATCHED_FONTS_PATH]), fonts.rename_font) # Rename fonts.
